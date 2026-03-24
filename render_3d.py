@@ -1,20 +1,13 @@
-import numpy as np
 import plotly.graph_objects as go
+# ... (Keep your data generation/z_grid code here) ...
 
-# 1. Generate high-fidelity 3D rainbow mesh data
-x = np.linspace(-5, 5, 100)
-y = np.linspace(-5, 5, 100)
-x_grid, y_grid = np.meshgrid(x, y)
-z_grid = np.sin(np.sqrt(x_grid**2 + y_grid**2))
-
-# 2. Build the Surface Plot with Rainbow Colorscale
+# 1. CREATE the Figure first
 fig = go.Figure(data=[go.Surface(
     z=z_grid, 
-    colorscale='Rainbow',
-    colorbar_title='Voltage (V)'
+    colorscale='Rainbow'
 )])
 
-# 3. Apply Professional Styling
+# 2. APPLY axis labels and main title
 fig.update_layout(
     title='AlphaVisuals: Solar Data 3D Analytics',
     scene=dict(
@@ -25,6 +18,12 @@ fig.update_layout(
     autosize=True
 )
 
-# 4. Export to HTML for your Portfolio
+# 3. ADD the colorbar "legend" label
+fig.update_traces(
+    colorbar_title_text='Efficiency (%)',
+    selector=dict(type='surface')
+)
+
+# 4. EXPORT to the web file
 fig.write_html("index.html")
 print("Optimization Complete: index.html generated.")
